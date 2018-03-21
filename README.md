@@ -41,6 +41,8 @@ Style game and add attractive images for falling objects and user character.
 
 ## Aspirational Features 
 
+*Wobble effect for stacked items - potentially fall off depending on avatar speed ??
+
 *Running User Scoreboard 
 
 *Leaderboard 
