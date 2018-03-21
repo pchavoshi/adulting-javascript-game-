@@ -1,0 +1,25 @@
+{
+  "name": "adulting-javascript-game-",
+  "version": "1.0.0",
+  "description": "Adulthood the game: try to catch all of your adult responsibilities while avoiding things that will knock you off track!",
+  "main": "adulting.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pchavoshi/adulting-javascript-game-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pchavoshi/adulting-javascript-game-/issues"
+  },
+  "homepage": "https://github.com/pchavoshi/adulting-javascript-game-#readme",
+  "devDependencies": {},
+  "dependencies"" {
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12",
+
+  }
+}
