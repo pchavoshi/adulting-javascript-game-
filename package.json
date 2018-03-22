@@ -4,7 +4,8 @@
   "description": "Adulthood the game: try to catch all of your adult responsibilities while avoiding things that will knock you off track!",
   "main": "adulting.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "webpack --watch --mode 'development'",
+    "dev": "webpack --watch --mode development --module-bind js=babel-loader"
   },
   "repository": {
     "type": "git",
@@ -16,10 +17,12 @@
     "url": "https://github.com/pchavoshi/adulting-javascript-game-/issues"
   },
   "homepage": "https://github.com/pchavoshi/adulting-javascript-game-#readme",
-  "devDependencies": {},
-  "dependencies"" {
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12",
-
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.12"
   }
 }
