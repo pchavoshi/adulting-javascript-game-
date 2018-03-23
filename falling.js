@@ -1,5 +1,5 @@
 class Falling {
-  constructor(x, y, color, width, height, context){ 
+  constructor(x, y, color, width, height, context){
     this.width = width;
     this.height = height;
     this.x = x;

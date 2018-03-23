@@ -4,8 +4,7 @@
   "description": "Adulthood the game: try to catch all of your adult responsibilities while avoiding things that will knock you off track!",
   "main": "adulting.js",
   "scripts": {
-    "postinstall": "webpack --watch --mode 'development'",
-    "dev": "webpack --watch --mode development --module-bind js=babel-loader"
+    "postinstall": "webpack --watch --mode development --module-bind js=babel-loader"
   },
   "repository": {
     "type": "git",

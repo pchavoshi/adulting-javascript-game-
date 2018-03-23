@@ -7,5 +7,5 @@ document.addEventListener("DOMContentLoaded", () => {
   canvasEl.width = 600;
   canvasEl.height = 400;
 
-  new Animation(ctx).start();
+  new Animation(ctx, canvasEl).start();
 });

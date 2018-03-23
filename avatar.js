@@ -1,11 +1,12 @@
 class Avatar {
-constructor(x, y, color, width, height, context){
+constructor(x, y, color, width, height, context, canvas){
   this.width = width;
   this.height = height;
   this.x = x;
   this.y = y;
   this.color = color;
   this.context = context;
+  this.canvas = canvas
   this.speedX = 0;
   this.rightPressed = false;
   this.leftPressed = false;
@@ -53,7 +54,7 @@ constructor(x, y, color, width, height, context){
   }
 
   hitSides(){
-    const rightSide = 600 - this.width;
+    const rightSide = this.canvas.width - this.width;
     const leftSide = 0;
     if (this.x > rightSide){
       this.x = rightSide;
