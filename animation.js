@@ -1,9 +1,10 @@
 import Avatar from './avatar';
+import Falling from './falling';
 
 class Animation {
   constructor(context){
     this.context = context;
-    this.avatar = new Avatar (300, 390, "red", 10, 10);
+    this.avatar = new Avatar (300, 390, "red", 10, 10, context);
     this.update = this.update.bind(this);
   }
 
@@ -11,14 +12,14 @@ class Animation {
     setInterval(this.update, 20);
   }
 
-  draw() {
-    this.avatar.draw(this.context);
-  }
+  // draw() {
+  //   this.avatar.draw(this.context);
+  // }
 
   update() {
     this.context.clearRect(0, 0, 600, 400);
      this.avatar.update();
-     this.draw();
+     this.avatar.draw();
   }
 
 }

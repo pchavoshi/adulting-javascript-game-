@@ -1,10 +1,11 @@
 class Avatar {
-constructor(x, y, color, width, height){
+constructor(x, y, color, width, height, context){
   this.width = width;
   this.height = height;
   this.x = x;
   this.y = y;
   this.color = color;
+  this.context = context;
   this.speedX = 0;
   this.rightPressed = false;
   this.leftPressed = false;
@@ -30,9 +31,9 @@ constructor(x, y, color, width, height){
     }
   }
 
-  draw(context){
-  context.fillStyle = this.color;
-  context.fillRect(this.x, this.y, this.width, this.height);
+  draw(){
+  this.context.fillStyle = this.color;
+  this.context.fillRect(this.x, this.y, this.width, this.height);
   }
 
   update(){
@@ -48,7 +49,19 @@ constructor(x, y, color, width, height){
 
   newPos(){
     this.x += this.speedX;
+    this.hitSides();
   }
+
+  hitSides(){
+    const rightSide = 600 - this.width;
+    const leftSide = 0;
+    if (this.x > rightSide){
+      this.x = rightSide;
+    } else if (this.x < leftSide){
+      this.x = leftSide;
+    }
+  }
+
 }
 
 export default Avatar;
