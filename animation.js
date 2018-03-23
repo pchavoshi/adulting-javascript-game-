@@ -12,14 +12,12 @@ class Animation {
     setInterval(this.update, 20);
   }
 
-  // draw() {
-  //   this.avatar.draw(this.context);
-  // }
-
   update() {
     this.context.clearRect(0, 0, 600, 400);
      this.avatar.update();
      this.avatar.draw();
+     this.falling.update();
+     this.falling.draw();
   }
 
 }
