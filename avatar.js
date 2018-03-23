@@ -6,7 +6,10 @@ constructor(x, y, color, width, height, context, canvas){
   this.y = y;
   this.color = color;
   this.context = context;
-  this.canvas = canvas
+  this.canvas = canvas;
+  this.withFallingsHeight = height;
+  this.withFallingsLeft = this.x;
+  this.withFallingsRight = this.x + this.width;
   this.speedX = 0;
   this.rightPressed = false;
   this.leftPressed = false;
@@ -14,6 +17,7 @@ constructor(x, y, color, width, height, context, canvas){
   document.addEventListener("keyup", this.keyUpHandler.bind(this));
   this.update = this.update.bind(this);
   this.newPos = this.newPos.bind(this);
+  this.hitSides = this.hitSides.bind(this);
   }
 
   keyDownHandler(e){
@@ -37,11 +41,16 @@ constructor(x, y, color, width, height, context, canvas){
   this.context.fillRect(this.x, this.y, this.width, this.height);
   }
 
+  updateCatchSurface() {
+    this.withFallingsLeft += this.speedX;
+    this.withFallingsRight += this.speedX;
+  }
+
   update(){
     if (this.rightPressed === true) {
-      this.speedX = 1;
+      this.speedX = 2;
     } else if (this.leftPressed === true) {
-      this.speedX = -1;
+      this.speedX = -2;
     } else if (this.rightPressed || this.leftPressed === false) {
       this.speedX = 0;
     }
@@ -50,6 +59,7 @@ constructor(x, y, color, width, height, context, canvas){
 
   newPos(){
     this.x += this.speedX;
+    this.updateCatchSurface();
     this.hitSides();
   }
 
@@ -58,8 +68,10 @@ constructor(x, y, color, width, height, context, canvas){
     const leftSide = 0;
     if (this.x > rightSide){
       this.x = rightSide;
+      this.updateCatchSurface();
     } else if (this.x < leftSide){
       this.x = leftSide;
+      this.updateCatchSurface();
     }
   }
 
