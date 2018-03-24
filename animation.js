@@ -25,7 +25,9 @@ class Animation {
     if (this.counter === this.targetCounter){
       this.counter = 0;
       let x = this.createRandom(0, 590);
-      this.fallings.push(new Falling(x, 0, "blue", 10, 10, this.context, this.avatar, this.canvas));
+      let colorIndex = this.createRandom(1, 4);
+      let color = Animation.OBJECTS[colorIndex];
+      this.fallings.push(new Falling(x, 0, color, 10, 10, this.context, this.avatar, this.canvas));
       this.targetCounter = this.createRandom(200, 400);
     }
   }
@@ -45,11 +47,20 @@ class Animation {
      this.updateFallings();
      this.start();
   }
+
+}
+
 // for gameplay may be better to generate at set intervals rather than randomly
 // if so change createObstacle, if this.counter % (target interval) is zero,
 // then generate
 // when i have my icons put them in a constArray and index into them randomly
 // to generate different random icons
-}
+
+Animation.OBJECTS = {
+    1: "blue",
+    2: "green",
+    3: "orange",
+    4: "red"
+  };
 
 export default Animation;
