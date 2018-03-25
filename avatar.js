@@ -1,18 +1,15 @@
 class Avatar {
   constructor(x, y, img, context, canvas) {
-    // this.width = width;
-    // this.height = height;
     this.x = x;
     this.y = y;
     this.context = context;
     this.image = new Image();
     this.image.src = img;
     this.image.onload = this.draw;
-    // this.color = img;
     this.canvas = canvas;
-    // this.withFallingsHeight = height;
-    this.withFallingsLeft = this.x;
-    // this.withFallingsRight = this.x + this.width;
+    this.catchSurfaceTop = this.canvas.height - 135;
+    this.catchSurfaceLeft = this.x + 15;
+    this.catchSurfaceRight = this.x + 50;
     this.speedX = 0;
     this.rightPressed = false;
     this.leftPressed = false;
@@ -21,7 +18,6 @@ class Avatar {
     this.update = this.update.bind(this);
     this.newPos = this.newPos.bind(this);
     this.hitSides = this.hitSides.bind(this);
-    // this.draw = this.draw.bind(this);
   }
 
   keyDownHandler(e) {
@@ -44,14 +40,9 @@ class Avatar {
     this.context.drawImage(this.image, this.x, this.y);
   }
 
-  // draw() {
-  //   this.context.fillStyle = this.color;
-  //   this.context.fillRect(this.x, this.y, this.width, this.height);
-  // }
-
   updateCatchSurface() {
-    this.withFallingsLeft += this.speedX;
-    this.withFallingsRight += this.speedX;
+    this.catchSurfaceLeft += this.speedX;
+    this.catchSurfaceRight += this.speedX;
   }
 
   update() {

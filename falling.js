@@ -4,7 +4,7 @@ class Falling {
     this.height = height;
     this.x = x;
     this.y = y;
-    this.speedY = 1;
+    this.speedY = 1.5;
     this.speedX = 0;
     this.color = color;
     this.context = context;
@@ -21,22 +21,21 @@ class Falling {
   }
 
   didCollide() {
-    const avatarRight = this.avatar.withFallingsRight;
-    const avatarLeft = this.avatar.withFallingsLeft;
-    const avatarTop = this.canvas.height - this.avatar.withFallingsHeight;
+    const avatarRight = this.avatar.catchSurfaceRight;
+    const avatarLeft = this.avatar.catchSurfaceLeft;
+    const avatarTop = this.avatar.catchSurfaceTop;
     const fallingRight = this.x + this.width;
     const fallingLeft = this.x;
     const fallingBottom = this.y + this.height;
-    const fallingTop = this.y;
     if (
       fallingBottom < avatarTop ||
       fallingRight < avatarLeft ||
       fallingLeft > avatarRight ||
-      fallingBottom > avatarTop
+      fallingBottom > avatarTop + 2
     ) {
     } else {
       this.collided = true;
-      this.avatar.withFallingsHeight += this.height;
+      this.avatar.catchSurfaceTop -= this.height;
     }
   }
 
@@ -45,8 +44,8 @@ class Falling {
     this.speedX = this.avatar.speedX;
     this.x += this.speedX;
     this.hitSides();
-    this.avatar.withFallingsRight = this.x + this.width;
-    this.avatar.withFallingsLeft = this.x;
+    this.avatar.catchSurfaceRight = this.x + this.width;
+    this.avatar.catchSurfaceLeft = this.x;
   }
 
   update() {
@@ -59,8 +58,8 @@ class Falling {
   }
 
   hitSides() {
-    const rightSide = this.canvas.width - this.width;
-    const leftSide = 0;
+    const rightSide = this.canvas.width - 166 - this.width;
+    const leftSide = 20;
     if (this.x > rightSide) {
       this.x = rightSide;
     } else if (this.x < leftSide) {
