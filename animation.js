@@ -8,7 +8,13 @@ class Animation {
     this.fallings = [];
     this.counter = 0;
     this.targetCounter = 100;
-    this.avatar = new Avatar (300, 390, "red", 10, 10, context, this.canvas);
+    this.avatar = new Avatar(
+      this.canvas.width / 2 - 108,
+      this.canvas.height - 216,
+      'avatar.png',
+      this.context,
+      this.canvas
+    );
     this.update = this.update.bind(this);
   }
 
@@ -22,12 +28,14 @@ class Animation {
 
   createFalling() {
     this.counter += 1;
-    if (this.counter === this.targetCounter){
+    if (this.counter === this.targetCounter) {
       this.counter = 0;
       let x = this.createRandom(0, 590);
       let colorIndex = this.createRandom(1, 4);
       let color = Animation.OBJECTS[colorIndex];
-      this.fallings.push(new Falling(x, 0, color, 10, 10, this.context, this.avatar, this.canvas));
+      this.fallings.push(
+        new Falling(x, 0, color, 10, 10, this.context, this.avatar, this.canvas)
+      );
       this.targetCounter = this.createRandom(200, 400);
     }
   }
@@ -41,13 +49,12 @@ class Animation {
 
   update() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-     this.avatar.update();
-     this.avatar.draw();
-     this.createFalling();
-     this.updateFallings();
-     this.start();
+    this.avatar.update();
+    this.avatar.draw();
+    // this.createFalling();
+    // this.updateFallings();
+    this.start();
   }
-
 }
 
 // for gameplay may be better to generate at set intervals rather than randomly
@@ -57,10 +64,10 @@ class Animation {
 // to generate different random icons
 
 Animation.OBJECTS = {
-    1: "blue",
-    2: "green",
-    3: "orange",
-    4: "red"
-  };
+  1: 'blue',
+  2: 'green',
+  3: 'orange',
+  4: 'red'
+};
 
 export default Animation;
