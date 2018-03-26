@@ -1,20 +1,24 @@
 class Falling {
-  constructor(x, y, img, type, context, avatar, canvas) {
+  constructor(x, y, img, type, speedY, gravitySpeed, context, avatar, canvas, animation) {
     this.x = x;
     this.y = y;
-    this.speedY = 1.5;
+    this.speedY = speedY;
+    this.gravitySpeed = gravitySpeed;
     this.speedX = 0;
     this.context = context;
     this.avatar = avatar;
     this.canvas = canvas;
+    this.animation = animation;
     this.type = type;
     this.image = new Image();
     this.image.src = img;
-    this.image.onload = this.draw;
     this.collided = false;
+    this.tabulated = false;
     this.update = this.update.bind(this);
     this.updateCollided = this.updateCollided.bind(this);
     this.draw = this.draw.bind(this);
+    this.image.onload = this.draw;
+    this.didCollide = this.didCollide.bind(this);
   }
 
   draw() {
@@ -32,11 +36,18 @@ class Falling {
       fallingBottom < avatarTop ||
       fallingRight < avatarLeft ||
       fallingLeft > avatarRight ||
-      fallingBottom > avatarTop + 2
+      fallingBottom > avatarTop + 5
     ) {
     } else if (this.type === 'good') {
       this.collided = true;
       this.avatar.catchSurfaceTop -= 32;
+      this.animation.pointFallings += 1;
+    } else if (this.type === 'pizza') {
+      this.tabulated = true;
+      this.animation.pizza -= 1;
+    } else if (this.type === 'pillow') {
+      this.avatar.catchSurfaceTop = this.canvas.height - 135;
+      this.animation.levelUp();
     }
   }
 
@@ -52,8 +63,12 @@ class Falling {
   update() {
     if (this.collided === true) {
       this.updateCollided();
+    } else if (this.tabulated === true) {
+      this.speedY += this.gravitySpeed;
+      this.y += this.speedY;
     } else {
       this.didCollide();
+      this.speedY += this.gravitySpeed;
       this.y += this.speedY;
     }
   }

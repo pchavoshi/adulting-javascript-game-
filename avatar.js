@@ -5,7 +5,6 @@ class Avatar {
     this.context = context;
     this.image = new Image();
     this.image.src = img;
-    this.image.onload = this.draw;
     this.canvas = canvas;
     this.catchSurfaceTop = this.canvas.height - 135;
     this.catchSurfaceLeft = this.x + 15;
@@ -18,6 +17,8 @@ class Avatar {
     this.update = this.update.bind(this);
     this.newPos = this.newPos.bind(this);
     this.hitSides = this.hitSides.bind(this);
+    this.draw = this.draw.bind(this);
+    this.image.onload = this.draw;
   }
 
   keyDownHandler(e) {

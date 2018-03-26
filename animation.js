@@ -12,6 +12,12 @@ class Animation {
     this.pizzaTarget = 100;
     this.pillowCounter = 0;
     this.pillowTarget = 100;
+    this.level = 1;
+    this.fallingSpeed = 1.5;
+    this.gravitySpeed = 0.015;
+    this.pointFallings = 0;
+    this.pizza = 10;
+    this.score = 0;
     this.avatar = new Avatar(
       this.canvas.width / 2 - 108,
       this.canvas.height - 216,
@@ -20,10 +26,34 @@ class Animation {
       this.canvas
     );
     this.update = this.update.bind(this);
+    this.drawScore = this.drawScore.bind(this);
+    this.updateFallings = this.updateFallings.bind(this);
   }
 
   start() {
     requestAnimationFrame(this.update);
+  }
+
+  levelUp() {
+    this.score += this.pointFallings;
+    this.level += 1;
+    this.pointFallings = 0;
+    this.fallings = [];
+    this.gravitySpeed += 0.015;
+    this.fallingSpeed += 0.5;
+  }
+
+
+  drawScore() {
+    this.context.font = "16px Arial";
+    this.context.fillStyle = "#0095DD";
+    this.context.fillText("Score: "+this.score, 8, 20);
+  }
+
+  drawPizza() {
+    this.context.font = "16px Arial";
+    this.context.fillStyle = "#0095DD";
+    this.context.fillText("Pizza Remaining: "+this.pizza, 8, 40);
   }
 
   createRandom(min, max) {
@@ -38,7 +68,7 @@ class Animation {
       let imgIndex = this.createRandom(1, 8);
       let img = Animation.GOOD_OBJECTS[imgIndex];
       this.fallings.push(
-        new Falling(x, 0, img, 'good', this.context, this.avatar, this.canvas)
+        new Falling(x, 0, img, 'good', this.fallingSpeed, this.gravitySpeed, this.context, this.avatar, this.canvas, this)
       );
       this.targetCounter = this.createRandom(200, 400);
     }
@@ -51,7 +81,7 @@ class Animation {
       let x = this.createRandom(18, this.canvas.width - 170);
       const img = './images/pizza.png';
       this.fallings.push(
-        new Falling(x, 0, img, 'pizza', this.context, this.avatar, this.canvas)
+        new Falling(x, 0, img, 'pizza', this.fallingSpeed, this.gravitySpeed, this.context, this.avatar, this.canvas, this)
       );
       this.pizzaTarget = this.createRandom(200, 400);
     }
@@ -64,16 +94,18 @@ class Animation {
       let x = this.createRandom(18, this.canvas.width - 170);
       const img = './images/pillow.png';
       this.fallings.push(
-        new Falling(x, 0, img, 'pillow', this.context, this.avatar, this.canvas)
+        new Falling(x, 0, img, 'pillow', this.fallingSpeed, this.gravitySpeed, this.context, this.avatar, this.canvas, this)
       );
       this.pillowTarget = this.createRandom(200, 400);
     }
   }
 
   updateFallings() {
-    for (let i = 0; i < this.fallings.length; i += 1) {
-      this.fallings[i].update();
-      this.fallings[i].draw();
+    if(this.fallings.length){
+      for (let i = 0; i < this.fallings.length; i += 1) {
+        this.fallings[i].draw();
+        this.fallings[i].update();
+      }
     }
   }
 
@@ -85,12 +117,14 @@ class Animation {
     this.createPizzaFalling();
     this.createPillowFalling();
     this.updateFallings();
+    this.drawScore();
+    this.drawPizza();
     this.start();
   }
 }
 
 // for gameplay may be better to generate at set intervals rather than randomly
-// if so change createObstacle, if this.counter % (target interval) is zero,
+// if so change createFalling, if this.counter % (target interval) is zero,
 // then generate
 
 Animation.GOOD_OBJECTS = {
