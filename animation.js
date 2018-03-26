@@ -11,7 +11,7 @@ class Animation {
     this.avatar = new Avatar(
       this.canvas.width / 2 - 108,
       this.canvas.height - 216,
-      'avatar.png',
+      './images/avatar.png',
       this.context,
       this.canvas
     );
@@ -26,15 +26,28 @@ class Animation {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  createFalling() {
+  createGoodFalling() {
     this.counter += 1;
     if (this.counter === this.targetCounter) {
       this.counter = 0;
       let x = this.createRandom(18, this.canvas.width - 170);
-      let colorIndex = this.createRandom(1, 4);
-      let color = Animation.OBJECTS[colorIndex];
+      let imgIndex = this.createRandom(1, 8);
+      let img = Animation.GOOD_OBJECTS[imgIndex];
       this.fallings.push(
-        new Falling(x, 0, color, 10, 10, this.context, this.avatar, this.canvas)
+        new Falling(x, 0, img, 'good', this.context, this.avatar, this.canvas)
+      );
+      this.targetCounter = this.createRandom(200, 400);
+    }
+  }
+
+  createPizzaFalling() {
+    this.counter += 1;
+    if (this.counter === this.targetCounter) {
+      this.counter = 0;
+      let x = this.createRandom(18, this.canvas.width - 170);
+      const img = './images/pizza.png';
+      this.fallings.push(
+        new Falling(x, 0, img, 'pizza', this.context, this.avatar, this.canvas)
       );
       this.targetCounter = this.createRandom(200, 400);
     }
@@ -51,7 +64,8 @@ class Animation {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.avatar.draw();
     this.avatar.update();
-    this.createFalling();
+    this.createGoodFalling();
+    this.createPizzaFalling();
     this.updateFallings();
     this.start();
   }
@@ -61,11 +75,15 @@ class Animation {
 // if so change createObstacle, if this.counter % (target interval) is zero,
 // then generate
 
-Animation.OBJECTS = {
-  1: 'blue',
-  2: 'green',
-  3: 'orange',
-  4: 'red'
+Animation.GOOD_OBJECTS = {
+  1: './images/dog.png',
+  2: './images/drugs.png',
+  3: './images/salad.png',
+  4: './images/wash.png',
+  5: './images/dumbbells.png',
+  6: './images/groceries.png',
+  7: './images/inbox.png',
+  8: './images/tax.png'
 };
 
 export default Animation;

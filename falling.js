@@ -1,41 +1,42 @@
 class Falling {
-  constructor(x, y, color, width, height, context, avatar, canvas) {
-    this.width = width;
-    this.height = height;
+  constructor(x, y, img, type, context, avatar, canvas) {
     this.x = x;
     this.y = y;
     this.speedY = 1.5;
     this.speedX = 0;
-    this.color = color;
     this.context = context;
     this.avatar = avatar;
     this.canvas = canvas;
+    this.type = type;
+    this.image = new Image();
+    this.image.src = img;
+    this.image.onload = this.draw;
     this.collided = false;
     this.update = this.update.bind(this);
     this.updateCollided = this.updateCollided.bind(this);
+    this.draw = this.draw.bind(this);
   }
 
   draw() {
-    this.context.fillStyle = this.color;
-    this.context.fillRect(this.x, this.y, this.width, this.height);
+    this.context.drawImage(this.image, this.x, this.y);
   }
 
   didCollide() {
     const avatarRight = this.avatar.catchSurfaceRight;
     const avatarLeft = this.avatar.catchSurfaceLeft;
     const avatarTop = this.avatar.catchSurfaceTop;
-    const fallingRight = this.x + this.width;
+    const fallingRight = this.x + 32;
     const fallingLeft = this.x;
-    const fallingBottom = this.y + this.height;
+    const fallingBottom = this.y + 32;
     if (
       fallingBottom < avatarTop ||
       fallingRight < avatarLeft ||
       fallingLeft > avatarRight ||
       fallingBottom > avatarTop + 2
     ) {
-    } else {
+    } else if (this.type === 'good') {
       this.collided = true;
-      this.avatar.catchSurfaceTop -= this.height;
+      this.avatar.catchSurfaceTop -= 32;
     }
   }
 
@@ -44,7 +45,7 @@ class Falling {
     this.speedX = this.avatar.speedX;
     this.x += this.speedX;
     this.hitSides();
-    this.avatar.catchSurfaceRight = this.x + this.width;
+    this.avatar.catchSurfaceRight = this.x + 32;
     this.avatar.catchSurfaceLeft = this.x;
   }
 
@@ -58,8 +59,8 @@ class Falling {
   }
 
   hitSides() {
-    const rightSide = this.canvas.width - 166 - this.width;
-    const leftSide = 20;
+    const rightSide = this.canvas.width - 166 - 32;
+    const leftSide = 10;
     if (this.x > rightSide) {
       this.x = rightSide;
     } else if (this.x < leftSide) {
