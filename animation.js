@@ -8,6 +8,10 @@ class Animation {
     this.fallings = [];
     this.counter = 0;
     this.targetCounter = 100;
+    this.pizzaCounter = 0;
+    this.pizzaTarget = 100;
+    this.pillowCounter = 0;
+    this.pillowTarget = 100;
     this.avatar = new Avatar(
       this.canvas.width / 2 - 108,
       this.canvas.height - 216,
@@ -41,28 +45,28 @@ class Animation {
   }
 
   createPizzaFalling() {
-    this.counter += 1;
-    if (this.counter === this.targetCounter) {
-      this.counter = 0;
+    this.pizzaCounter += 1;
+    if (this.pizzaCounter === this.pizzaTarget) {
+      this.pizzaCounter = 0;
       let x = this.createRandom(18, this.canvas.width - 170);
       const img = './images/pizza.png';
       this.fallings.push(
         new Falling(x, 0, img, 'pizza', this.context, this.avatar, this.canvas)
       );
-      this.targetCounter = this.createRandom(200, 400);
+      this.pizzaTarget = this.createRandom(200, 400);
     }
   }
 
   createPillowFalling() {
-    this.counter += 1;
-    if (this.counter === this.targetCounter) {
-      this.counter = 0;
+    this.pillowCounter += 1;
+    if (this.pillowCounter === this.pillowTarget) {
+      this.pillowCounter = 0;
       let x = this.createRandom(18, this.canvas.width - 170);
       const img = './images/pillow.png';
       this.fallings.push(
         new Falling(x, 0, img, 'pillow', this.context, this.avatar, this.canvas)
       );
-      this.targetCounter = this.createRandom(200, 400);
+      this.pillowTarget = this.createRandom(200, 400);
     }
   }
 
