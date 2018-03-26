@@ -53,6 +53,19 @@ class Animation {
     }
   }
 
+  createPillowFalling() {
+    this.counter += 1;
+    if (this.counter === this.targetCounter) {
+      this.counter = 0;
+      let x = this.createRandom(18, this.canvas.width - 170);
+      const img = './images/pillow.png';
+      this.fallings.push(
+        new Falling(x, 0, img, 'pillow', this.context, this.avatar, this.canvas)
+      );
+      this.targetCounter = this.createRandom(200, 400);
+    }
+  }
+
   updateFallings() {
     for (let i = 0; i < this.fallings.length; i += 1) {
       this.fallings[i].update();
@@ -66,6 +79,7 @@ class Animation {
     this.avatar.update();
     this.createGoodFalling();
     this.createPizzaFalling();
+    this.createPillowFalling();
     this.updateFallings();
     this.start();
   }
@@ -80,7 +94,7 @@ Animation.GOOD_OBJECTS = {
   2: './images/drugs.png',
   3: './images/salad.png',
   4: './images/wash.png',
-  5: './images/dumbbells.png',
+  5: './images/dumbbell.png',
   6: './images/groceries.png',
   7: './images/inbox.png',
   8: './images/tax.png'
