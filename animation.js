@@ -1,5 +1,6 @@
 import Avatar from './avatar';
 import Falling from './falling';
+import Button from './button';
 
 class Animation {
   constructor(context, canvas) {
@@ -7,6 +8,7 @@ class Animation {
     this.canvas = canvas;
     this.fallings = [];
     this.counter = 0;
+    this.alive = true;
     this.targetCounter = 100;
     this.pizzaCounter = 0;
     this.pizzaTarget = 100;
@@ -16,8 +18,10 @@ class Animation {
     this.fallingSpeed = 1.5;
     this.gravitySpeed = 0.015;
     this.pointFallings = 0;
-    this.pizza = 10;
+    this.pizza = 1;
     this.score = 0;
+    this.mouseX = 0;
+    this.mouseY = 0;
     this.avatar = new Avatar(
       this.canvas.width / 2 - 108,
       this.canvas.height - 216,
@@ -28,7 +32,16 @@ class Animation {
     this.update = this.update.bind(this);
     this.drawScore = this.drawScore.bind(this);
     this.updateFallings = this.updateFallings.bind(this);
+    this.replay = this.replay.bind(this);
+    this.mouseClicked = this.mouseClicked.bind(this);
   }
+
+  gameOver() {
+    if ((this.pizza <= 0) || (this.avatar.catchSurfaceTop <= 0)) {
+      this.alive = false;
+    }
+  }
+
 
   start() {
     requestAnimationFrame(this.update);
@@ -48,13 +61,53 @@ class Animation {
     this.context.font = "16px Arial";
     this.context.fillStyle = "#0095DD";
     this.context.fillText("Score: "+this.score, 8, 20);
+    if (!this.alive) {
+      this.context.fillText("Game Over!", 8, 40);
+      const gameOver = new Image();
+      gameOver.src = './images/dog.png';
+      gameOver.onload = () => {
+          this.context.drawImage(gameOver, 8, 60);
+      }
+      document.addEventListener("click", this.mouseClicked);
+      const restart = new Button(8, 40, 60, 92);
+      if (restart.checkClicked(this.mouseX, this.mouseY)) {
+        this.replay();
+      }
+
+
+    }
   }
+
+mouseClicked(e) {
+  this.mouseX = e.pageX;
+  this.mouseY = e.pageY;
+console.log("X:", this.mouseX, "Y", this.mouseY)
+}
+
+
+
+replay() {
+  this.alive = true;
+  this.level = 1;
+  this.fallingSpeed = 1.5;
+  this.gravitySpeed = 0.015;
+  this.pointFallings = 0;
+  this.pizza = 3;
+  this.score = 0;
+    this.fallings = [];
+    this.start();
+}
 
   drawPizza() {
     this.context.font = "16px Arial";
     this.context.fillStyle = "#0095DD";
+    if (this.alive) {
     this.context.fillText("Pizza Remaining: "+this.pizza, 8, 40);
   }
+  }
+  // keep this separate from drawscore so can easiliy implement pizza meter later
+
+
 
   createRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -111,15 +164,19 @@ class Animation {
 
   update() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.avatar.draw();
-    this.avatar.update();
-    this.createGoodFalling();
-    this.createPizzaFalling();
-    this.createPillowFalling();
-    this.updateFallings();
+    this.gameOver();
     this.drawScore();
-    this.drawPizza();
-    this.start();
+      this.drawPizza();
+    if (this.alive) {
+      this.avatar.draw();
+      this.avatar.update();
+      this.createGoodFalling();
+      this.createPizzaFalling();
+      this.createPillowFalling();
+      this.updateFallings();
+
+      this.start();
+    }
   }
 }
 
