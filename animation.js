@@ -19,19 +19,25 @@ class Animation {
     this.fallingSpeed = 1.5;
     this.gravitySpeed = 0.015;
     this.pointFallings = 0;
-    this.pizza = 3;
+    this.pizza = 1;
     this.score = 0;
     this.mouseX = 0;
     this.mouseY = 0;
-    this.avatar = 0;
+    this.pizzaIntervalMax = 800;
+    this.pizzaIntervalMin = 200;
+    this.avatar = new Avatar(
+      this.canvas.width / 2 - 108,
+      this.canvas.height - 216,
+      './images/avatar.png',
+      this.context,
+      this.canvas
+    );
+    this.currentHandleClick = null;
     this.update = this.update.bind(this);
     this.drawScore = this.drawScore.bind(this);
     this.updateFallings = this.updateFallings.bind(this);
     this.replay = this.replay.bind(this);
-    this.welcome = this.welcome.bind(this);
     this.start = this.start.bind(this);
-    this.initialize = this.initialize.bind(this);
-    this.directions = this.directions.bind(this);
   }
 
   gameOver() {
@@ -40,55 +46,10 @@ class Animation {
     }
   }
 
-  welcome() {
-    const directions = new Image();
-    directions.src = './images/inbox.png';
-    directions.onload = () => {
-      this.context.drawImage(directions, 0, 0);
-    };
-    const directionsButton = new Button(0, 32, 0, 32);
-    const game = new Image();
-    game.src = './images/drugs.png';
-    game.onload = () => {
-      this.context.drawImage(game, 0, 32);
-    };
-    const gameButton = new Button(0, 32, 32, 64);
-    document.addEventListener(
-      'click',
-      this.mouseClicked(directionsButton, this.directions)
-    );
-    document.addEventListener(
-      'click',
-      this.mouseClicked(gameButton, this.initialize)
-    );
-  }
 
-  directions() {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    const game = new Image();
-    game.src = './images/drugs.png';
-    game.onload = () => {
-      this.context.drawImage(game, 0, 0);
-    };
-    const gameButton = new Button(0, 32, 0, 32);
-    document.addEventListener(
-      'click',
-      this.mouseClicked(gameButton, this.initialize)
-    );
-  }
-
-  initialize() {
-    this.avatar = new Avatar(
-      this.canvas.width / 2 - 108,
-      this.canvas.height - 216,
-      './images/avatar.png',
-      this.context,
-      this.canvas
-    );
-    this.start();
-  }
 
   start() {
+    document.removeEventListener('click', this.currentHandleClick);
     requestAnimationFrame(this.update);
   }
 
@@ -100,6 +61,11 @@ class Animation {
     this.fallings = [];
     this.gravitySpeed += 0.015;
     this.fallingSpeed += 0.5;
+    if (this.pizzaIntervalMax > 100) {
+        this.pizzaIntervalMax -= 100;
+    } else if (this.pizzaIntervalMin > 50) {
+      this.pizzaIntervalMin -= 25;
+    }
   }
 
   drawScore() {
@@ -114,7 +80,6 @@ class Animation {
         this.context.drawImage(continu, 8, 60);
       };
       const continueButton = new Button(8, 40, 60, 92);
-      // this.levelScreen = false;
       document.addEventListener(
         'click',
         this.mouseClicked(continueButton, this.start)
@@ -135,7 +100,7 @@ class Animation {
   }
 
   mouseClicked(button, action) {
-    return e => {
+    const handleClick = e => {
       this.mouseX = e.pageX;
       this.mouseY = e.pageY;
       if (button.checkClicked(this.mouseX, this.mouseY)) {
@@ -143,6 +108,8 @@ class Animation {
         action();
       }
     };
+    this.currentHandleClick = handleClick;
+    return handleClick;
   }
 
   replay() {
@@ -154,7 +121,6 @@ class Animation {
     this.pizza = 3;
     this.score = 0;
     this.fallings = [];
-    debugger;
     this.start();
   }
 
@@ -216,7 +182,7 @@ class Animation {
           this
         )
       );
-      this.pizzaTarget = this.createRandom(200, 400);
+      this.pizzaTarget = this.createRandom(this.pizzaIntervalMin, this.pizzaIntervalMax);
     }
   }
 
