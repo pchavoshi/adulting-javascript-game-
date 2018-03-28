@@ -1,5 +1,16 @@
 class Falling {
-  constructor(x, y, img, type, speedY, gravitySpeed, context, avatar, canvas, animation) {
+  constructor(
+    x,
+    y,
+    img,
+    type,
+    speedY,
+    gravitySpeed,
+    context,
+    avatar,
+    canvas,
+    animation
+  ) {
     this.x = x;
     this.y = y;
     this.speedY = speedY;
@@ -36,7 +47,7 @@ class Falling {
       fallingBottom < avatarTop ||
       fallingRight < avatarLeft ||
       fallingLeft > avatarRight ||
-      fallingBottom > avatarTop + 5
+      fallingBottom > avatarTop + this.speedY
     ) {
     } else if (this.type === 'good') {
       this.collided = true;

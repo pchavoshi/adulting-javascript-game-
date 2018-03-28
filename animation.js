@@ -154,6 +154,7 @@ class Animation {
     this.pizza = 3;
     this.score = 0;
     this.fallings = [];
+    debugger;
     this.start();
   }
 
