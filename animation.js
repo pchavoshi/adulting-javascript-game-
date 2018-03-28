@@ -33,15 +33,14 @@ class Animation {
     this.drawScore = this.drawScore.bind(this);
     this.updateFallings = this.updateFallings.bind(this);
     this.replay = this.replay.bind(this);
-    this.mouseClicked = this.mouseClicked.bind(this);
+    // this.mouseClicked = this.mouseClicked.bind(this);
   }
 
   gameOver() {
-    if ((this.pizza <= 0) || (this.avatar.catchSurfaceTop <= 0)) {
+    if (this.pizza <= 0 || this.avatar.catchSurfaceTop <= 0) {
       this.alive = false;
     }
   }
-
 
   start() {
     requestAnimationFrame(this.update);
@@ -56,58 +55,55 @@ class Animation {
     this.fallingSpeed += 0.5;
   }
 
-
   drawScore() {
-    this.context.font = "16px Arial";
-    this.context.fillStyle = "#0095DD";
-    this.context.fillText("Score: "+this.score, 8, 20);
+    this.context.font = '16px Arial';
+    this.context.fillStyle = '#0095DD';
+    this.context.fillText('Score: ' + this.score, 8, 20);
     if (!this.alive) {
-      this.context.fillText("Game Over!", 8, 40);
+      this.context.fillText('Game Over!', 8, 40);
       const gameOver = new Image();
       gameOver.src = './images/dog.png';
       gameOver.onload = () => {
-          this.context.drawImage(gameOver, 8, 60);
-      }
-      document.addEventListener("click", this.mouseClicked);
+        this.context.drawImage(gameOver, 8, 60);
+      };
       const restart = new Button(8, 40, 60, 92);
-      if (restart.checkClicked(this.mouseX, this.mouseY)) {
-        this.replay();
-      }
-
-
+      document.addEventListener(
+        'click',
+        this.mouseClicked(restart, this.replay)
+      );
     }
   }
 
-mouseClicked(e) {
-  this.mouseX = e.pageX;
-  this.mouseY = e.pageY;
-console.log("X:", this.mouseX, "Y", this.mouseY)
-}
+  mouseClicked(button, action) {
+    return e => {
+      this.mouseX = e.pageX;
+      this.mouseY = e.pageY;
+      if (button.checkClicked(this.mouseX, this.mouseY)) {
+        action();
+      }
+    };
+  }
 
-
-
-replay() {
-  this.alive = true;
-  this.level = 1;
-  this.fallingSpeed = 1.5;
-  this.gravitySpeed = 0.015;
-  this.pointFallings = 0;
-  this.pizza = 3;
-  this.score = 0;
+  replay() {
+    this.alive = true;
+    this.level = 1;
+    this.fallingSpeed = 1.5;
+    this.gravitySpeed = 0.015;
+    this.pointFallings = 0;
+    this.pizza = 3;
+    this.score = 0;
     this.fallings = [];
     this.start();
-}
+  }
 
   drawPizza() {
-    this.context.font = "16px Arial";
-    this.context.fillStyle = "#0095DD";
+    this.context.font = '16px Arial';
+    this.context.fillStyle = '#0095DD';
     if (this.alive) {
-    this.context.fillText("Pizza Remaining: "+this.pizza, 8, 40);
-  }
+      this.context.fillText('Pizza Remaining: ' + this.pizza, 8, 40);
+    }
   }
   // keep this separate from drawscore so can easiliy implement pizza meter later
-
-
 
   createRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -121,7 +117,18 @@ replay() {
       let imgIndex = this.createRandom(1, 8);
       let img = Animation.GOOD_OBJECTS[imgIndex];
       this.fallings.push(
-        new Falling(x, 0, img, 'good', this.fallingSpeed, this.gravitySpeed, this.context, this.avatar, this.canvas, this)
+        new Falling(
+          x,
+          0,
+          img,
+          'good',
+          this.fallingSpeed,
+          this.gravitySpeed,
+          this.context,
+          this.avatar,
+          this.canvas,
+          this
+        )
       );
       this.targetCounter = this.createRandom(200, 400);
     }
@@ -134,7 +141,18 @@ replay() {
       let x = this.createRandom(18, this.canvas.width - 170);
       const img = './images/pizza.png';
       this.fallings.push(
-        new Falling(x, 0, img, 'pizza', this.fallingSpeed, this.gravitySpeed, this.context, this.avatar, this.canvas, this)
+        new Falling(
+          x,
+          0,
+          img,
+          'pizza',
+          this.fallingSpeed,
+          this.gravitySpeed,
+          this.context,
+          this.avatar,
+          this.canvas,
+          this
+        )
       );
       this.pizzaTarget = this.createRandom(200, 400);
     }
@@ -147,14 +165,25 @@ replay() {
       let x = this.createRandom(18, this.canvas.width - 170);
       const img = './images/pillow.png';
       this.fallings.push(
-        new Falling(x, 0, img, 'pillow', this.fallingSpeed, this.gravitySpeed, this.context, this.avatar, this.canvas, this)
+        new Falling(
+          x,
+          0,
+          img,
+          'pillow',
+          this.fallingSpeed,
+          this.gravitySpeed,
+          this.context,
+          this.avatar,
+          this.canvas,
+          this
+        )
       );
       this.pillowTarget = this.createRandom(200, 400);
     }
   }
 
   updateFallings() {
-    if(this.fallings.length){
+    if (this.fallings.length) {
       for (let i = 0; i < this.fallings.length; i += 1) {
         this.fallings[i].draw();
         this.fallings[i].update();
@@ -166,7 +195,7 @@ replay() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.gameOver();
     this.drawScore();
-      this.drawPizza();
+    this.drawPizza();
     if (this.alive) {
       this.avatar.draw();
       this.avatar.update();
