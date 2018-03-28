@@ -19,7 +19,7 @@ class Animation {
     this.fallingSpeed = 1.5;
     this.gravitySpeed = 0.015;
     this.pointFallings = 0;
-    this.pizza = 1;
+    this.pizza = 3;
     this.score = 0;
     this.mouseX = 0;
     this.mouseY = 0;
