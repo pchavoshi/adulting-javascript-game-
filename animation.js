@@ -9,6 +9,7 @@ class Animation {
     this.fallings = [];
     this.counter = 0;
     this.alive = true;
+    this.levelScreen = false;
     this.targetCounter = 100;
     this.pizzaCounter = 0;
     this.pizzaTarget = 100;
@@ -18,10 +19,65 @@ class Animation {
     this.fallingSpeed = 1.5;
     this.gravitySpeed = 0.015;
     this.pointFallings = 0;
-    this.pizza = 1;
+    this.pizza = 3;
     this.score = 0;
     this.mouseX = 0;
     this.mouseY = 0;
+    this.avatar = 0;
+    this.update = this.update.bind(this);
+    this.drawScore = this.drawScore.bind(this);
+    this.updateFallings = this.updateFallings.bind(this);
+    this.replay = this.replay.bind(this);
+    this.welcome = this.welcome.bind(this);
+    this.start = this.start.bind(this);
+    this.initialize = this.initialize.bind(this);
+    this.directions = this.directions.bind(this);
+  }
+
+  gameOver() {
+    if (this.pizza <= 0 || this.avatar.catchSurfaceTop <= 0) {
+      this.alive = false;
+    }
+  }
+
+  welcome() {
+    const directions = new Image();
+    directions.src = './images/inbox.png';
+    directions.onload = () => {
+      this.context.drawImage(directions, 0, 0);
+    };
+    const directionsButton = new Button(0, 32, 0, 32);
+    const game = new Image();
+    game.src = './images/drugs.png';
+    game.onload = () => {
+      this.context.drawImage(game, 0, 32);
+    };
+    const gameButton = new Button(0, 32, 32, 64);
+    document.addEventListener(
+      'click',
+      this.mouseClicked(directionsButton, this.directions)
+    );
+    document.addEventListener(
+      'click',
+      this.mouseClicked(gameButton, this.initialize)
+    );
+  }
+
+  directions() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    const game = new Image();
+    game.src = './images/drugs.png';
+    game.onload = () => {
+      this.context.drawImage(game, 0, 0);
+    };
+    const gameButton = new Button(0, 32, 0, 32);
+    document.addEventListener(
+      'click',
+      this.mouseClicked(gameButton, this.initialize)
+    );
+  }
+
+  initialize() {
     this.avatar = new Avatar(
       this.canvas.width / 2 - 108,
       this.canvas.height - 216,
@@ -29,17 +85,7 @@ class Animation {
       this.context,
       this.canvas
     );
-    this.update = this.update.bind(this);
-    this.drawScore = this.drawScore.bind(this);
-    this.updateFallings = this.updateFallings.bind(this);
-    this.replay = this.replay.bind(this);
-    // this.mouseClicked = this.mouseClicked.bind(this);
-  }
-
-  gameOver() {
-    if (this.pizza <= 0 || this.avatar.catchSurfaceTop <= 0) {
-      this.alive = false;
-    }
+    this.start();
   }
 
   start() {
@@ -49,6 +95,7 @@ class Animation {
   levelUp() {
     this.score += this.pointFallings;
     this.level += 1;
+    this.levelScreen = true;
     this.pointFallings = 0;
     this.fallings = [];
     this.gravitySpeed += 0.015;
@@ -59,7 +106,20 @@ class Animation {
     this.context.font = '16px Arial';
     this.context.fillStyle = '#0095DD';
     this.context.fillText('Score: ' + this.score, 8, 20);
-    if (!this.alive) {
+    if (this.levelScreen) {
+      this.context.fillText('Level: ' + this.level, 8, 40);
+      const continu = new Image();
+      continu.src = './images/dog.png';
+      continu.onload = () => {
+        this.context.drawImage(continu, 8, 60);
+      };
+      const continueButton = new Button(8, 40, 60, 92);
+      // this.levelScreen = false;
+      document.addEventListener(
+        'click',
+        this.mouseClicked(continueButton, this.start)
+      );
+    } else if (!this.alive) {
       this.context.fillText('Game Over!', 8, 40);
       const gameOver = new Image();
       gameOver.src = './images/dog.png';
@@ -79,6 +139,7 @@ class Animation {
       this.mouseX = e.pageX;
       this.mouseY = e.pageY;
       if (button.checkClicked(this.mouseX, this.mouseY)) {
+        this.levelScreen = false;
         action();
       }
     };
@@ -195,8 +256,8 @@ class Animation {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.gameOver();
     this.drawScore();
-    this.drawPizza();
-    if (this.alive) {
+    if (this.alive && !this.levelScreen) {
+      this.drawPizza();
       this.avatar.draw();
       this.avatar.update();
       this.createGoodFalling();
