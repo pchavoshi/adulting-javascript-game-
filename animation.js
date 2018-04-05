@@ -12,9 +12,9 @@ class Animation {
     this.levelScreen = false;
     this.targetCounter = 100;
     this.pizzaCounter = 0;
-    this.pizzaTarget = 100;
+    this.pizzaTarget = 60;
     this.pillowCounter = 0;
-    this.pillowTarget = 100;
+    this.pillowTarget = 300;
     this.level = 1;
     this.fallingSpeed = 1.5;
     this.gravitySpeed = 0.015;
@@ -28,7 +28,7 @@ class Animation {
     this.avatar = new Avatar(
       this.canvas.width / 2 - 108,
       this.canvas.height - 216,
-      './images/avatar.png',
+      './images/avatar2.png',
       this.context,
       this.canvas
     );
@@ -46,8 +46,6 @@ class Animation {
     }
   }
 
-
-
   start() {
     document.removeEventListener('click', this.currentHandleClick);
     requestAnimationFrame(this.update);
@@ -62,9 +60,9 @@ class Animation {
     this.gravitySpeed += 0.015;
     this.fallingSpeed += 0.5;
     if (this.pizzaIntervalMax > 100) {
-        this.pizzaIntervalMax -= 100;
+      this.pizzaIntervalMax -= 100;
     } else if (this.pizzaIntervalMin > 50) {
-      this.pizzaIntervalMin -= 25;
+      this.pizzaIntervalMin -= 40;
     }
   }
 
@@ -182,7 +180,10 @@ class Animation {
           this
         )
       );
-      this.pizzaTarget = this.createRandom(this.pizzaIntervalMin, this.pizzaIntervalMax);
+      this.pizzaTarget = this.createRandom(
+        this.pizzaIntervalMin,
+        this.pizzaIntervalMax
+      );
     }
   }
 
@@ -206,7 +207,7 @@ class Animation {
           this
         )
       );
-      this.pillowTarget = this.createRandom(200, 400);
+      this.pillowTarget = this.createRandom(800, 1200);
     }
   }
 
@@ -244,10 +245,10 @@ class Animation {
 Animation.GOOD_OBJECTS = {
   1: './images/dog.png',
   2: './images/drugs.png',
-  3: './images/salad.png',
-  4: './images/wash.png',
-  5: './images/dumbbell.png',
-  6: './images/groceries.png',
+  3: './images/dumbbell.png',
+  4: './images/groceries.png',
+  5: './images/salad.png',
+  6: './images/wash.png',
   7: './images/inbox.png',
   8: './images/tax.png'
 };
