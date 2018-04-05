@@ -47,7 +47,82 @@
       font-size: 28px;
       border-radius: 5px;
        box-shadow: 2px 4px 2px #505050;
-       background-color: #fafafa
+       background-color: #fafafa;
+       border: 1px solid #606060;
+}
+
+.button:hover {
+  background-color: #B0B0B0
+}
+.catch p {
+display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 85px;
+text-align: center;
+
+ }
+
+ .two {
+   margin-top: 5px
+ }
+
+ .one {
+   margin-right: 17px
+ }
+
+.four {
+  margin-top: 14px;
+  margin-right: 12px
+}
+
+.three {
+  margin-top: 3px;
+  margin-right: 7px
+}
+
+.six {
+  margin-top: 8px
+}
+
+.seven {
+  margin-left: 10px
+}
+
+.five {
+  margin-top: 12px;
+  margin-left: 4px
+}
+
+
+
+
+ .catch-images {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+ }
+
+ .catch-images h3 {
+   margin-left: 15px;
+   margin-right: 15px
+ }
+
+ .catch {
+   font-family: 'Changa One', cursive;
+   padding: 10px;
+   display: flex;
+   flex-direction: column
+ }
+
+.catch h3 {
+  width: 200px;
+  text-align: center
+}
+
+.avatar {
+  display: flex;
+  flex-direction: row
 }
 
 .logo {
@@ -57,6 +132,28 @@
   margin-left: 15px;
   margin-top: 30px;
 }
+
+.avatar img {
+  margin-right: 25px
+}
+
+.pizza-text {
+    margin-top: -15px
+}
+
+.pizza {
+  height: 60px;
+  width: auto;
+  margin-left: 300px;
+  margin-top: 15px
+}
+
+#directions-screen button {
+  position: absolute;
+  top: 80%;
+left: 60%;
+}
+
 
 .main-img {
   width: auto;
@@ -81,5 +178,6 @@
   border: 5px solid #202020;
   border-radius: 8px;
   background-image: url('./images/feature.png');
+  box-shadow: 0px 0px 20px #606060;
 
 }

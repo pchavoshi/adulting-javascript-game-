@@ -56,8 +56,8 @@ class Animation {
     // this.level += 1;
     // this.levelScreen = true;
     // this.pointFallings = 0;
-    this.fallings = [];
-    this.gravitySpeed += 0.025;
+    // this.fallings = [];
+    this.gravitySpeed += 0.010;
     this.fallingSpeed += 0.8;
     if (this.pizzaIntervalMax > 100) {
       this.pizzaIntervalMax -= 50;
@@ -83,13 +83,13 @@ class Animation {
         this.mouseClicked(continueButton, this.start)
       );
     } else if (!this.alive) {
-      this.context.fillText('Game Over!', 8, 40);
-      const gameOver = new Image();
-      gameOver.src = './images/dog.png';
-      gameOver.onload = () => {
-        this.context.drawImage(gameOver, 8, 60);
-      };
-      const restart = new Button(8, 40, 60, 92);
+      this.context.fillText('Game Over! Click screen to play again', 8, 40);
+      // const gameOver = new Image();
+      // gameOver.src = './images/dog.png';
+      // gameOver.onload = () => {
+      //   this.context.drawImage(gameOver, 8, 60);
+      // };
+      // const restart = new Button(8, 40, 60, 92);
       document.addEventListener(
         'click',
         this.replay
