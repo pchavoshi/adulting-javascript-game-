@@ -1,16 +1,85 @@
+.container {
+  background-image: url('./images/messy.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 100vh;
+  position: relative;
+}
+
+#directions-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  z-index: 4;
+  height: 500px;
+  width: 800px;
+  background-image: url('./images/feature.png');
+}
+
+#welcome-screen {
+  position: absolute;
+  background: white;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 500px;
+  width: 800px;
+  background-image: url('./images/feature.png');
+}
+
+.buttons {
+  position: absolute;
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+  left: 40%;
+  top: 250px
+}
+
+.button {
+  padding: 10px;
+      margin: 8px;
+      font-family: 'Changa One', cursive;
+      font-size: 28px;
+      border-radius: 5px;
+       box-shadow: 2px 4px 2px #505050;
+       background-color: #fafafa
+}
+
+.logo {
+  width: 440px;
+  height: auto;
+  margin-bottom: 60px;
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+.main-img {
+  width: auto;
+  height: 320px;
+  margin-bottom: -120px;
+  margin-left: 20px;
+}
+
 .canvas-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #game-canvas {
-  height: 600px;
-  width: 885px;
-  background-image: url('./images/original-background.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  border: 3px solid black;
-  border-radius: 5px;
+  height: 500px;
+  width: 800px;
+  border: 5px solid #202020;
+  border-radius: 8px;
+  background-image: url('./images/feature.png');
+
 }

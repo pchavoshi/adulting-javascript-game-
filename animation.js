@@ -16,19 +16,19 @@ class Animation {
     this.pillowCounter = 0;
     this.pillowTarget = 300;
     this.level = 1;
-    this.fallingSpeed = 1.5;
-    this.gravitySpeed = 0.015;
+    this.fallingSpeed = 1.8;
+    this.gravitySpeed = 0.025;
     this.pointFallings = 0;
     this.pizza = 3;
     this.score = 0;
     this.mouseX = 0;
     this.mouseY = 0;
-    this.pizzaIntervalMax = 800;
-    this.pizzaIntervalMin = 200;
+    this.pizzaIntervalMax = 300;
+    this.pizzaIntervalMin = 50;
     this.avatar = new Avatar(
       this.canvas.width / 2 - 108,
       this.canvas.height - 216,
-      './images/avatar2.png',
+      './images/avatar.png',
       this.context,
       this.canvas
     );
@@ -52,17 +52,17 @@ class Animation {
   }
 
   levelUp() {
-    this.score += this.pointFallings;
-    this.level += 1;
-    this.levelScreen = true;
-    this.pointFallings = 0;
+    // this.score += this.pointFallings;
+    // this.level += 1;
+    // this.levelScreen = true;
+    // this.pointFallings = 0;
     this.fallings = [];
-    this.gravitySpeed += 0.015;
-    this.fallingSpeed += 0.5;
+    this.gravitySpeed += 0.025;
+    this.fallingSpeed += 0.8;
     if (this.pizzaIntervalMax > 100) {
-      this.pizzaIntervalMax -= 100;
-    } else if (this.pizzaIntervalMin > 50) {
-      this.pizzaIntervalMin -= 40;
+      this.pizzaIntervalMax -= 50;
+    } else if (this.pizzaIntervalMin > 20) {
+      this.pizzaIntervalMin -= 20;
     }
   }
 
@@ -92,7 +92,7 @@ class Animation {
       const restart = new Button(8, 40, 60, 92);
       document.addEventListener(
         'click',
-        this.mouseClicked(restart, this.replay)
+        this.replay
       );
     }
   }
@@ -113,8 +113,8 @@ class Animation {
   replay() {
     this.alive = true;
     this.level = 1;
-    this.fallingSpeed = 1.5;
-    this.gravitySpeed = 0.015;
+    this.fallingSpeed = 1.8;
+    this.gravitySpeed = 0.025;
     this.pointFallings = 0;
     this.pizza = 3;
     this.score = 0;
@@ -156,7 +156,7 @@ class Animation {
           this
         )
       );
-      this.targetCounter = this.createRandom(200, 400);
+      this.targetCounter = this.createRandom(60, 200);
     }
   }
 
@@ -214,9 +214,16 @@ class Animation {
   updateFallings() {
     if (this.fallings.length) {
       for (let i = 0; i < this.fallings.length; i += 1) {
-        this.fallings[i].draw();
-        this.fallings[i].update();
-      }
+if (this.fallings[i]) {
+  if ( this.fallings[i].collided){
+    delete this.fallings[i];
+  } else {  this.fallings[i].draw();
+    this.fallings[i].update();}
+
+}
+
+}
+
     }
   }
 
@@ -230,7 +237,7 @@ class Animation {
       this.avatar.update();
       this.createGoodFalling();
       this.createPizzaFalling();
-      this.createPillowFalling();
+      // this.createPillowFalling();
       this.updateFallings();
 
       this.start();

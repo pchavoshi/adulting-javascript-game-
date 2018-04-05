@@ -2,29 +2,60 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Adulting</title>
+    <title>Adulting: The Game</title>
       <script type="application/javascript" src="dist/bundle.js"></script>
       <link rel="stylesheet" href="./main.css">
+      <link href="https://fonts.googleapis.com/css?family=Changa+One" rel="stylesheet">
   </head>
   <body>
 
     <div class="container">
 
       <div id="welcome-screen" >
-        <button type="button" class="start-button"> Start Game </button>
-        <button type="button" id='directions-button'>How to Play</button>
+        <div class="welcome-container">
+
+          <div class="welcome-imgs">
+            <img class="logo" src="./images/logo.svg" />
+            <img class="main-img" src="./images/home-screen.png" />
+          </div>
+
+          <div class="buttons">
+            <button type="button" class="start-button button"> Start Game </button>
+            <button type="button" class="button" id='directions-button'>How to Play</button>
+
+          </div>
+
+        </div>
+
       </div>
 
       <div id="directions-screen">
-        <p> these are the directions </p>
-        <button type="button" class="start-button">Play!</button>
+
+        <div class="catch">
+          <h3>How much adulting can you do? See how many responsibilities you can keep up with!</h3>
+          <p><img src='./images/dog.png' /><br/>Walk your dog! </p>
+          <p><img src='./images/drugs.png' /> Take your meds! </p>
+          <p><img src='./images/dumbbell.png' /> Workout! </p>
+          <p><img src='./images/groceries.png' /> Get groceries! </p>
+          <p><img src='./images/salad.png' /> Eat healthy! </p>
+          <p><img src='./images/wash.png' /> Wash the dishes! </p>
+          <p><img src='./images/inbox.png' /> Answer your messages! </p>
+          <p><img src='./images/tax.png' /> Do your taxes! </p>
+
+          <h3>Catch objects with your LEFT basket and watch your score go up!</h3>
+          <img src='./images/avatar.png' />
+          <h3>But be careful, if you eat too much pizza, your game is over!</h3>
+        </div>
+
+        <button type="button" class="start-button button">Play!</button>
       </div>
 
       <div class="canvas-container">
           <canvas id="game-canvas" ></canvas>
       </div>
 
-    </div>
+
+  </div>
 
   </body>
 </html>

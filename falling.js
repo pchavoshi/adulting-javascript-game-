@@ -51,11 +51,16 @@ class Falling {
     ) {
     } else if (this.type === 'good') {
       this.collided = true;
-      this.avatar.catchSurfaceTop -= 32;
-      this.animation.pointFallings += 1;
+      // this.avatar.catchSurfaceTop -= 32;
+      // this.animation.pointFallings += 1;
+      this.animation.score += 5;
+      if (this.animation.score % 20 === 0) {
+        this.animation.levelUp();
+      }
     } else if (this.type === 'pizza') {
-      this.tabulated = true;
+      // this.tabulated = true;
       this.animation.pizza -= 1;
+this.collided = true;
     } else if (this.type === 'pillow') {
       this.avatar.catchSurfaceTop = this.canvas.height - 135;
       this.animation.levelUp();
@@ -72,16 +77,19 @@ class Falling {
   }
 
   update() {
-    if (this.collided === true) {
-      this.updateCollided();
-    } else if (this.tabulated === true) {
-      this.speedY += this.gravitySpeed;
-      this.y += this.speedY;
-    } else {
-      this.didCollide();
-      this.speedY += this.gravitySpeed;
-      this.y += this.speedY;
-    }
+    // if (this.collided === true) {
+    //   this.updateCollided();
+    // } else if (this.tabulated === true) {
+    //   this.speedY += this.gravitySpeed;
+    //   this.y += this.speedY;
+    // } else {
+    //   this.didCollide();
+    //   this.speedY += this.gravitySpeed;
+    //   this.y += this.speedY;
+    // }
+    this.didCollide();
+    this.speedY += this.gravitySpeed;
+    this.y += this.speedY;
   }
 
   hitSides() {

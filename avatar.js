@@ -48,9 +48,9 @@ class Avatar {
 
   update() {
     if (this.rightPressed === true) {
-      this.speedX = 2;
+      this.speedX = 3.5;
     } else if (this.leftPressed === true) {
-      this.speedX = -2;
+      this.speedX = -3.5;
     } else if (this.rightPressed || this.leftPressed === false) {
       this.speedX = 0;
     }

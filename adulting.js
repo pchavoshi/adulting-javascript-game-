@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const canvasEl = document.getElementById('game-canvas');
       const ctx = canvasEl.getContext('2d');
 
-      canvasEl.width = 885;
-      canvasEl.height = 600;
+      canvasEl.width = 800;
+      canvasEl.height = 500;
 
       new Animation(ctx, canvasEl).start();
     }
